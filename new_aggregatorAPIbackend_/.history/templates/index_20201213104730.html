@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>BRUHHHHH</title>
+</head>
+<body>
+    <h1>welp</h1>
+    <p id = "bruhh"></p>
+</body>
+<script>
+// Send the same request
+fetch('http://127.0.0.1:5000/hello')
+    .then(function (response) {
+        return response.json(); // But parse it as JSON this time
+    })
+    .then(function (json) {
+        console.log('GET response as JSON:');
+        console.log(json)
+        var first = json[1];
+        document.getElementById("bruhh").innerHTML = first.Object_id
+    })
+</script>
+</html>

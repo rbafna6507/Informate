@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script>
+        // Send the same request
+        fetch('http://127.0.0.1:5000/hello')
+            .then(function (response) {
+                return response.json(); // But parse it as JSON this time
+            })
+            .then(function (json) {
+                console.log('GET response as JSON:');
+                console.log(JSON.stringify(json)); // Here’s our JSON object
+                return global json
+            })
+        window.onload = function(){
+            var display = json;
+            document.getElementById("bruh") = json
+        };
+        
+            </script>
+    <title>BRUHHHHH</title>
+</head>
+<body>
+    <h1>welp</h1>
+    <p id = "bruh"></p>
+</body>
+</html>

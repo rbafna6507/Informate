@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+    <!-- Latest compiled and minified CSS -->
+<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>Informate</title>
+</head>
+
+<body>
+    <nav class="navbar-light bg-light" style="padding-bottom: 8px;">
+        <a style="margin-left: 24px" class="navbar-brand"><h2>Informate</h2></a>
+        <h6 style="margin-left: 24px">Reliable, real, and recent news, all in one place</h6>
+    </nav>
+    <div style="margin-left: 36px; padding-top: 12px">
+        <!-- <div>
+            <h1>Informate</h1>
+        <h6>Reliable, real, and recent news, all in one place</h6> -->
+        <div>
+            <h4>New York Times</h4>
+            <ul id = "nytimes"></ul>
+        </div>
+        <div>
+            <h4>Reuters</h4>
+            <ul id = "reuters"></ul>
+        </div>
+        <div>
+            <h4>Wired</h4>
+            <ul id = "wired"></ul>
+        </div>
+        <div>
+            <h4>Economist</h4>
+            <ul id = "economist"></ul>
+        </div>
+        <div>
+            <h4>BBC</h4>
+            <ul id = "bbc"></ul>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+<script>
+function createNode(element) {
+    return document.createElement(element);
+}
+
+function append(parent, el) {
+  return parent.appendChild(el);
+}
+
+// Send the same request
+fetch('https://newsaggregator-api.herokuapp.com/')
+    .then(function (response) {
+        return response.json(); // But parse it as JSON this time
+    })
+    .then(function (json) {
+        console.log('GET response as JSON:');
+        console.log(json);
+        lets_do_it("nytimes", json);
+        lets_do_it("reuters", json);
+        lets_do_it("wired", json);
+        lets_do_it("economist", json);
+        lets_do_it("bbc", json);
+        $(function () {
+            $('[data-toggle="popover"]').popover()
+})
+})
+function lets_do_it(ul_id, resp){
+    const ul = document.getElementById(ul_id)
+    for(var i = 0; i <= 5; i++){
+        let document = JSON.stringify(resp[0]);
+        document = JSON.parse(document);
+        headline = document[0];
+        summary = document[1];
+        link = document[2];
+        source = document[3];
+        // document.getElementById("bruhh").innerHTML = headline
+        let li = createNode('li'), a = createNode('a');
+        a.href = link;
+        a.innerHTML = headline;
+        a.target = "_blank";
+        a.dataset.toggle = "popover";
+        a.dataset.placement = "right";
+        a.dataset.content = summary;
+        a.dataset.trigger = "hover";
+        a.title = source;
+        append(li, a);
+        append(ul, li);
+        resp.shift();
+    }
+}
+</script>
+</html>

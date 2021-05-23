@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>BRUHHHHH</title>
+</head>
+<body>
+    <h1>welp</h1>
+    <ul id = "bruh"></ul>
+    <script>
+const ul = document.getElementById('bruh');
+
+function createNode(element) {
+  return document.createElement(element); // Create the type of element you pass in the parameters
+}
+
+function append(parent, el) {
+  return parent.appendChild(el); // Append the second parameter(element) to the first one
+}
+// Send the same request
+fetch('http://127.0.0.1:5000/hello')
+    .then(function (response) {
+        return response.json(); // But parse it as JSON this time
+    })
+    .then(function (json) {
+        let authors = json.results; // Get the results
+        return authors.map(function(author) { // Map through the results and for each run the code below
+          let li = createNode('li'), //  Create the elements we need
+            img = createNode('img'),
+            span = createNode('span');
+          img.src = author.picture.medium;  // Add the source of the image to be the src of the img element
+          span.innerHTML = `${author.name.first} ${author.name.last}`; // Make the HTML of our span to be the first and last name of our author
+          append(li, img); // Append all our elements
+          append(li, span);
+          append(ul, li);
+    })
+    })
+</script>
+</body>
+</html>
