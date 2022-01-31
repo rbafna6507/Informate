@@ -7,6 +7,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="index.js"></script>
     <title>Informate</title>
 </head>
 
@@ -19,80 +20,93 @@
         <!-- <div>
             <h1>Informate</h1>
         <h6>Reliable, real, and recent news, all in one place</h6> -->
-        <div>
+        <div id = "nyt">
             <h4>New York Times</h4>
-            <ul id = "nytimes"></ul>
+            <ul id = "nytimes_ul"></ul>
         </div>
-        <div>
+        <div id = "reuters">
             <h4>Reuters</h4>
-            <ul id = "reuters"></ul>
+            <ul id = "reuters_ul"></ul>
         </div>
-        <div>
+        <div id = "wired">
             <h4>Wired</h4>
-            <ul id = "wired"></ul>
+            <ul id = "wired_ul"></ul>
         </div>
-        <div>
+        <div id = "economist">
             <h4>Economist</h4>
-            <ul id = "economist"></ul>
+            <ul id = "economist_ul"></ul>
         </div>
-        <div>
+        <div id = "bbc">
             <h4>BBC</h4>
-            <ul id = "bbc"></ul>
+            <ul id = "bbc_ul"></ul>
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-</body>
-<script>
-function createNode(element) {
-    return document.createElement(element);
-}
-
-function append(parent, el) {
-  return parent.appendChild(el);
+    <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+  <!-- Load our React component. -->
+  <script type="text/babel">
+class ListElement extends React.Component {
+    
+    render() {
+        return (
+            <li>
+                <a href = {this.props.link} 
+                    data-content = {this.props.content} 
+                    target = "_blank"
+                    data-toggle="popover" 
+                    data-trigger = "hover"
+                    title = {this.props.source}>
+                    {this.props.headline}
+                </a>
+            </li>
+        );
+    }
 }
 
 // Send the same request
-fetch('https://newsaggregator-api.herokuapp.com/')
+// https://newsaggregator-api.herokuapp.com/
+fetch('http://127.0.0.1:3000/')
     .then(function (response) {
         return response.json(); // But parse it as JSON this time
     })
+    
     .then(function (json) {
         console.log('GET response as JSON:');
         console.log(json);
-        lets_do_it("nytimes", json);
-        lets_do_it("reuters", json);
-        lets_do_it("wired", json);
-        lets_do_it("economist", json);
-        lets_do_it("bbc", json);
+        lets_do_it("nytimes_ul", json);
+        lets_do_it("reuters_ul", json);
+        lets_do_it("wired_ul", json);
+        lets_do_it("economist_ul", json);
+        lets_do_it("bbc_ul", json);
         $(function () {
             $('[data-toggle="popover"]').popover()
 })
 })
 function lets_do_it(ul_id, resp){
-    const ul = document.getElementById(ul_id)
+    let ul = document.getElementById(ul_id)
+    let x = 0
     for(var i = 0; i <= 5; i++){
         let document = JSON.stringify(resp[0]);
         document = JSON.parse(document);
-        headline = document[0];
-        summary = document[1];
-        link = document[2];
-        source = document[3];
-        // document.getElementById("bruhh").innerHTML = headline
-        let li = createNode('li'), a = createNode('a');
-        a.href = link;
-        a.innerHTML = headline;
-        a.target = "_blank";
-        a.dataset.toggle = "popover";
-        a.dataset.placement = "right";
-        a.dataset.content = summary;
-        a.dataset.trigger = "hover";
-        a.title = source;
-        append(li, a);
-        append(ul, li);
+        let headline = document[0];
+        let summary = document[1];
+        let link = document[2];
+        let source = document[3];
+        
+        ReactDOM.render(<ListElement id = {x}
+                                    link = {link}
+                                    content = {summary}
+                                    source = {source}
+                                    headline = {headline}></ListElement>,
+                        ul)
         resp.shift();
+        console.log('done with lets_do_it')
     }
 }
 </script>
+</body>
 </html>
