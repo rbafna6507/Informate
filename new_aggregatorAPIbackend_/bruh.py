@@ -32,3 +32,6 @@ def hello():
     # GET request
     else:
         return jsonify(access_and_put_in_list_mongo_docs(collections))
+
+# if __name__ == "__main__":
+#     app.run(port=3000, debug=True)

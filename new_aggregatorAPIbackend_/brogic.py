@@ -12,12 +12,13 @@ doc_list = []
 def access_and_put_in_list_mongo_docs(dbcollections):
     doc_list = []
     for collection in dbcollections:
+
         documents_in_collection = collection.find()
         for document in documents_in_collection:
-            temp_hold_document_info = []
-            temp_hold_document_info.append(str(document['Headline']))
-            temp_hold_document_info.append(str(document['Info']))
-            temp_hold_document_info.append(str(document['Link']))
-            temp_hold_document_info.append(str(document['Source']))
+            temp_hold_document_info = {}
+            temp_hold_document_info['source'] = str(document['Source'])
+            temp_hold_document_info['headline'] = str(document['Headline'])
+            temp_hold_document_info['info'] = str(document['Info'])
+            temp_hold_document_info['link'] = str(document['Link'])
             doc_list.append(temp_hold_document_info)
     return doc_list
