@@ -58,7 +58,7 @@ class App extends React.Component {
 // using .then to go deeper into the api response.
 // then using the callback function for this.setState in order to print this.state.data once state is updated
   componentDidMount() {
-    fetch('https://newsaggregator-api.herokuapp.com/')
+    fetch('https://news-aggregator-v3.herokuapp.com/')
       .then(resp => resp.json())
       .then((story) => {
         this.setState({
