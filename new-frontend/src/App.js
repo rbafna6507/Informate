@@ -77,8 +77,8 @@ class App extends React.Component {
       console.log('this.state.data has things');
       return (
         <div style = {{display: 'inline-block',
-                       width: 550}}
-        >
+                       width: 550}}>
+          <title>Informate</title>
           <Navbar style = {{width:'100vw'}} bg="light" variant="light">
             <h1>Informate</h1>
           </Navbar>
