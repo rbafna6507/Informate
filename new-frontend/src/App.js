@@ -151,7 +151,10 @@ class App extends React.Component {
       );
     }
     return (
-      <h1>Informate</h1>
+      <div>
+        <h1>Informate</h1>
+        <p>Loading....Please Hold</p>
+      </div>
     )
   }
 }
